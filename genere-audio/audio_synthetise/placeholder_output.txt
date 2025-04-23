@@ -1,1 +1,0 @@
-Ce fichier garantit que le dossier 'audio_synthetise' est bien inclus dans l'archive.
