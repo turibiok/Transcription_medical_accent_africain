@@ -1,0 +1,1 @@
+Ceci est un fichier factice pour garantir que le dossier 'audio_batch' est bien présent.
