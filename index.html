@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche ASR : Accents Ouest-Africains</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Doux et Fiable (Soft & Trustworthy) - Une base de bleus et gris apaisants avec une touche de vert menthe pour les accents, créant un sentiment de professionnalisme, de calme et de fiabilité adapté à un sujet médical et technologique. -->
+    <!-- Application Structure Plan: L'application est structurée comme un récit linéaire et déroulant pour guider l'utilisateur à travers l'étude, de la définition du problème à sa solution et son impact. La structure est la suivante : 1) Introduction avec le résultat clé pour capter l'attention. 2) Section "Le Problème" pour visualiser la faible performance des modèles existants. 3) Section "La Solution" présentant le corpus de données créé. 4) Section "Le Processus" pour démystifier le fine-tuning. 5) Section "Les Résultats" avec des comparaisons visuelles et interactives. 6) Section "L'Impact" pour souligner l'importance du projet. Cette approche thématique, plutôt que de suivre la structure rigide de l'article, est conçue pour être plus intuitive et engageante pour un public plus large, en racontant une histoire claire de défi, de méthode et de succès. -->
+    <!-- Visualization & Content Choices: 1. Problème: Bar chart (Chart.js) pour comparer (Goal: Compare) les taux d'erreur (WER) élevés des modèles de base. Justification: Un bar chart est idéal pour une comparaison directe de deux métriques. 2. Solution (Corpus WAMAC): Cartes d'information (HTML/Tailwind) pour présenter (Goal: Organize) les statistiques clés du corpus de manière digeste. Justification: Les cartes permettent de segmenter et de mettre en évidence des informations distinctes. 3. Processus: Diagramme de flux simple (HTML/Tailwind) pour illustrer (Goal: Organize) les étapes du fine-tuning. Justification: Visualise une séquence logique de manière simple sans complexité technique. 4. Résultats (Comparaison): Bar chart (Chart.js) principal pour comparer (Goal: Compare) les trois modèles. Justification: Le visuel le plus percutant pour montrer l'amélioration drastique. 5. Résultats (Qualitatifs): Bloc de texte interactif (JS) pour démontrer (Goal: Compare/Inform) la différence de qualité. Justification: L'interaction engage l'utilisateur et rend l'impact de l'amélioration tangible. 6. Impact: Cartes avec icônes (HTML/Unicode) pour lister (Goal: Organize) les implications. Justification: Format visuellement attrayant pour résumer les points clés. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            color: #343A40;
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #005f73, #0a9396);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 1rem;
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                <span class="text-gradient">AI & Accents</span>
+            </div>
+            <ul class="hidden md:flex items-center space-x-6">
+                <li><a href="#problem" class="text-gray-600 hover:text-[#0a9396] transition-colors duration-300">Le Problème</a></li>
+                <li><a href="#solution" class="text-gray-600 hover:text-[#0a9396] transition-colors duration-300">La Solution</a></li>
+                <li><a href="#results" class="text-gray-600 hover:text-[#0a9396] transition-colors duration-300">Les Résultats</a></li>
+                <li><a href="#impact" class="text-gray-600 hover:text-[#0a9396] transition-colors duration-300">L'Impact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="hero" class="text-center mb-24">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 text-gray-800 leading-tight">Briser la Barrière de l'Accent dans l'IA Médicale</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                Les modèles de reconnaissance vocale standards échouent face à la diversité des accents, particulièrement en Afrique de l'Ouest. Notre recherche apporte une solution concrète.
+            </p>
+            <div class="flex justify-center items-center bg-white p-6 rounded-xl shadow-lg max-w-sm mx-auto">
+                <div>
+                    <p class="text-6xl font-bold text-gradient">73.1%</p>
+                    <p class="text-gray-700 font-medium mt-2">de réduction du taux d'erreur de transcription</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Le Problème : Un Biais d'Accent Coûteux</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Cette section expose le défi initial : les systèmes d'IA de pointe, entraînés principalement sur des accents occidentaux, sont peu fiables pour les professionnels de la santé en Afrique de l'Ouest. Les visualisations ci-dessous quantifient cet écart de performance, qui peut avoir des conséquences critiques dans un contexte médical.
+                </p>
+            </div>
+            <div class="chart-container max-w-3xl mx-auto h-80 sm:h-96">
+                <canvas id="problemChart"></canvas>
+            </div>
+            <p class="text-center mt-4 text-sm text-gray-500">Passez la souris sur les barres pour voir les valeurs exactes.</p>
+        </section>
+
+        <section id="solution" class="mb-24 bg-white rounded-2xl p-8 md:p-12 shadow-lg scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Notre Solution : Le Corpus WAMAC</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Pour résoudre le problème du biais d'accent, nous avons créé le "West African Medical Audio Corpus" (WAMAC). Cette section détaille les caractéristiques de ce corpus unique, qui constitue la fondation de notre travail et la clé pour entraîner une IA plus juste et plus précise.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card p-6 text-center">
+                    <span class="text-5xl font-bold text-gradient">25</span>
+                    <p class="mt-2 text-gray-600 font-medium">Heures d'audio</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <span class="text-5xl font-bold text-gradient">60</span>
+                    <p class="mt-2 text-gray-600 font-medium">Locuteurs uniques</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <span class="text-5xl font-bold text-gradient">5</span>
+                    <p class="mt-2 text-gray-600 font-medium">Pays représentés</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <span class="text-5xl font-bold text-gradient">3.5k</span>
+                    <p class="mt-2 text-gray-600 font-medium">Mots de vocabulaire médical</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Le Processus : Adapter l'IA par Fine-Tuning</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Cette section illustre notre méthodologie. Nous ne partons pas de zéro. Nous utilisons une technique appelée "fine-tuning" pour spécialiser un modèle d'IA existant et puissant (Whisper d'OpenAI) en l'entraînant spécifiquement avec notre corpus WAMAC.
+                </p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-8">
+                <div class="card p-6 w-full md:w-1/4 text-center">
+                    <p class="text-2xl mb-2">①</p>
+                    <h3 class="font-bold text-lg">Modèle de Base</h3>
+                    <p class="text-gray-600 text-sm">Whisper d'OpenAI, puissant mais non spécialisé.</p>
+                </div>
+                <div class="text-4xl font-bold text-[#94d2bd] transform rotate-90 md:rotate-0">→</div>
+                <div class="card p-6 w-full md:w-1/4 text-center bg-[#e9d8a6] text-black">
+                    <p class="text-2xl mb-2">②</p>
+                    <h3 class="font-bold text-lg">Entraînement Ciblé</h3>
+                    <p class="text-sm">Avec le corpus WAMAC de 25 heures d'audio médical.</p>
+                </div>
+                <div class="text-4xl font-bold text-[#94d2bd] transform rotate-90 md:rotate-0">→</div>
+                 <div class="card p-6 w-full md:w-1/4 text-center bg-[#0a9396] text-white">
+                    <p class="text-2xl mb-2">③</p>
+                    <h3 class="font-bold text-lg">Modèle Spécialisé</h3>
+                    <p class="text-sm">Précis et fiable pour les accents ouest-africains.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="results" class="mb-24 scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Les Résultats : Une Amélioration Spectaculaire</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                   Ici, nous présentons les fruits de notre travail. Le premier graphique compare quantitativement la précision des modèles avant et après notre intervention. Ensuite, une démonstration interactive vous permet de constater par vous-même la différence qualitative dans la transcription.
+                </p>
+            </div>
+            
+            <div class="chart-container max-w-3xl mx-auto h-80 sm:h-96 mb-16">
+                <canvas id="resultsChart"></canvas>
+            </div>
+
+            <div class="card max-w-4xl mx-auto p-8">
+                <h3 class="text-2xl font-bold text-center mb-6 text-gray-800">Démonstration Qualitative Interactive</h3>
+                <p class="text-center text-gray-600 mb-6">Sélectionnez un exemple pour comparer les transcriptions générées.</p>
+                <div id="example-buttons" class="flex justify-center flex-wrap gap-4 mb-6">
+                    <button class="px-4 py-2 bg-[#005f73] text-white rounded-lg hover:bg-[#0a9396] transition-colors duration-300 shadow" data-example="0">Exemple 1: Chiffres</button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-300" data-example="1">Exemple 2: Terme Médical</button>
+                    <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-300" data-example="2">Exemple 3: Posologie</button>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="mb-4">
+                        <p class="font-semibold text-gray-700">Phrase de référence :</p>
+                        <p id="ref-text" class="text-lg text-gray-900 font-mono p-2 bg-gray-100 rounded"></p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="font-semibold text-red-600">Modèle de base (Whisper) :</p>
+                            <p id="base-text" class="text-lg text-red-800 font-mono p-2 bg-red-50 rounded line-through decoration-red-400"></p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-green-600">Notre modèle (Fine-tuné) :</p>
+                            <p id="tuned-text" class="text-lg text-green-800 font-mono p-2 bg-green-50 rounded"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="bg-white rounded-2xl p-8 md:p-12 shadow-lg scroll-mt-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">L'Impact : Au-delà de la Technologie</h2>
+                <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                    L'amélioration de la précision technique n'est qu'un début. Cette section explore les implications concrètes et profondes de notre recherche pour les soins de santé, l'équité technologique et l'innovation locale en Afrique.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">🩺</div>
+                    <h3 class="text-xl font-bold mb-2">Meilleure Qualité des Soins</h3>
+                    <p class="text-gray-600">Réduit la charge administrative des médecins, libérant du temps pour les patients et minimisant les risques d'erreurs de documentation.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">🌍</div>
+                    <h3 class="text-xl font-bold mb-2">Justice Linguistique & Équité</h3>
+                    <p class="text-gray-600">Assure que les avantages de l'IA sont accessibles à tous, luttant contre les biais algorithmiques et promouvant l'inclusion technologique.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">💡</div>
+                    <h3 class="text-xl font-bold mb-2">Innovation Locale</h3>
+                    <p class="text-gray-600">Encourage le développement de solutions d'IA adaptées aux contextes locaux, en renforçant la souveraineté des données de santé.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 Projet de Recherche ASR - LETIA, Université d’Abomey-Calavi.</p>
+            <p class="text-sm text-gray-400 mt-2">Cette page est une visualisation interactive des résultats de recherche. Créé par KEKE Mahuvivi Turibio, H.C. Roland, J.R. Thierry, M. Daton.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const problemData = {
+                labels: ['Whisper-small (Base)', 'Dragon Medical One'],
+                datasets: [{
+                    label: 'Taux d\'Erreur sur les Mots (WER)',
+                    data: [42.8, 35.2],
+                    backgroundColor: ['#ee9b00', '#ca6702'],
+                    borderColor: ['#ee9b00', '#ca6702'],
+                    borderWidth: 1
+                }]
+            };
+            const problemConfig = {
+                type: 'bar',
+                data: problemData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Taux d\'Erreur (WER %) - Plus c\'est bas, mieux c\'est'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Performance des Modèles Standards sur les Accents Ouest-Africains',
+                            font: { size: 16 }
+                        },
+                        legend: { display: false }
+                    }
+                }
+            };
+            new Chart(document.getElementById('problemChart'), problemConfig);
+
+            const resultsData = {
+                labels: ['Whisper-small (Base)', 'Dragon Medical One', 'Notre Modèle (Fine-tuné)'],
+                datasets: [{
+                    label: 'Taux d\'Erreur sur les Mots (WER)',
+                    data: [42.8, 35.2, 11.5],
+                    backgroundColor: ['#ee9b00', '#ca6702', '#0a9396'],
+                    borderColor: ['#ee9b00', '#ca6702', '#0a9396'],
+                    borderWidth: 1
+                }]
+            };
+            const resultsConfig = {
+                type: 'bar',
+                data: resultsData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Taux d\'Erreur (WER %) - Plus c\'est bas, mieux c\'est'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Comparaison des Performances : Avant et Après Fine-Tuning',
+                            font: { size: 16 }
+                        },
+                        legend: { display: false }
+                    }
+                }
+            };
+            new Chart(document.getElementById('resultsChart'), resultsConfig);
+
+            const examples = [
+                {
+                    ref: "The patient presents with a fever of thirty-eight degrees.",
+                    base: "The patient presents with a fever of dirty heat degrees.",
+                    tuned: "The patient presents with a fever of thirty-eight degrees."
+                },
+                {
+                    ref: "We need to check his cholesterol levels.",
+                    base: "We need to check his colors true levels.",
+                    tuned: "We need to check his cholesterol levels."
+                },
+                {
+                    ref: "Administer one dose of paracetamol.",
+                    base: "Administer one dose of parasites mall.",
+                    tuned: "Administer one dose of paracetamol."
+                }
+            ];
+
+            const refText = document.getElementById('ref-text');
+            const baseText = document.getElementById('base-text');
+            const tunedText = document.getElementById('tuned-text');
+            const exampleButtonsContainer = document.getElementById('example-buttons');
+            const exampleButtons = exampleButtonsContainer.querySelectorAll('button');
+
+            function updateExample(index) {
+                const example = examples[index];
+                refText.textContent = example.ref;
+                baseText.textContent = example.base;
+                tunedText.textContent = example.tuned;
+                
+                exampleButtons.forEach((btn, i) => {
+                    if (i == index) {
+                        btn.classList.remove('bg-gray-200', 'text-gray-800', 'hover:bg-gray-300');
+                        btn.classList.add('bg-[#005f73]', 'text-white', 'hover:bg-[#0a9396]');
+                    } else {
+                        btn.classList.add('bg-gray-200', 'text-gray-800', 'hover:bg-gray-300');
+                        btn.classList.remove('bg-[#005f73]', 'text-white', 'hover:bg-[#0a9396]');
+                    }
+                });
+            }
+
+            exampleButtonsContainer.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const index = e.target.getAttribute('data-example');
+                    if (index) {
+                        updateExample(parseInt(index));
+                    }
+                }
+            });
+
+            updateExample(0);
+        });
+    </script>
+</body>
+</html>
